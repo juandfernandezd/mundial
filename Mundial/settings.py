@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Aplicacion',
+    'Aplicacion.ApiRest',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mundialbd',
         'USER': 'root',
-        'PASSWORD': 'orson1723',
+        'PASSWORD': 'orson123',
         'HOST': 'localhost',
         'PORT': '3306'
     }
@@ -107,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-CO'
 
 TIME_ZONE = 'UTC'
 
@@ -122,3 +124,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL='/media/'
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static_cdn")
+COMPRESS_ROOT = STATIC_ROOT
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
