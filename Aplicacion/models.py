@@ -45,6 +45,9 @@ class Participante(models.Model):
     posicion = models.IntegerField()
     es_creado = models.BooleanField(default = False)
     
+    def __unicode__(self):
+        return self.usuario.username
+    
 class Invitacion(models.Model):
     usuario = models.ManyToManyField(User)
     mensaje = models.TextField()
@@ -67,6 +70,9 @@ class Partido(models.Model):
     goles_visitante = models.IntegerField(default = -1)
     ronda = models.ForeignKey(Ronda)
     finalizado = models.BooleanField(default = False)
+    
+    def __unicode__(self):
+        return '{0} VS {1}'.format(self.equipo_local.nombre, self.equipo_visitante.nombre)
     
     
 class Pronostico(models.Model):
