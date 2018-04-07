@@ -17,8 +17,19 @@ class Equipo(models.Model):
 class Perfil(models.Model):
     
     usuario = models.OneToOneField(User, on_delete = models.CASCADE)
-    equipo_favorito = models.ForeignKey(Equipo, related_name = 'usuario')
+    equipo_favorito = models.ForeignKey(Equipo, related_name = 'usuario', blank = True, null = True)
     es_premium = models.BooleanField(default = False)
+    
+    @classmethod
+    def create(cls, usuario):
+        perfil = cls(usuario = usuario)
+        perfil.save()
+        return perfil
+        
+    def asignar_equipo_favorito(self, equipo):
+        self.equipo_favorito = equipo
+        self.save()
+        
     
 class Grupo(models.Model):
     
@@ -37,16 +48,30 @@ class Grupo(models.Model):
     chat = models.BooleanField(default = False)
     miembros = models.ManyToManyField(User, through = "Participante")
     
+    @classmethod
+    def create(cls, nombre, apuesta, categoria, tipo, chat, creador):
+        grupo = cls(nombre = nombre, apuesta = apuesta, categoria = categoria, tipo = tipo, chat = chat)
+        grupo.save()
+        return grupo
+    
 class Participante(models.Model):
     
     usuario = models.ForeignKey(User, on_delete = models.CASCADE)
     grupo = models.ForeignKey(Grupo, on_delete = models.CASCADE)
-    puntaje = models.FloatField()
-    posicion = models.IntegerField()
-    es_creado = models.BooleanField(default = False)
+    puntaje = models.FloatField(default = 0.0)
+    posicion = models.IntegerField(default = 0)
+    es_admin = models.BooleanField(default = False)
+    
+    @classmethod
+    def create(cls, usuario, grupo, es_admin):
+        participante = cls(usuario = usuario, grupo = grupo, es_admin  = es_admin)
+        participante.save()
+        return participante
     
     def __unicode__(self):
         return self.usuario.username
+    
+    
     
 class Invitacion(models.Model):
     usuario = models.ManyToManyField(User)

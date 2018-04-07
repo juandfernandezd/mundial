@@ -5,6 +5,9 @@ from django.contrib import admin
 from Aplicacion.models import Partido, Equipo, Grupo, Participante, Invitacion,\
     Ronda, Pronostico
     
+admin.site.site_header = "Mundial"
+admin.site.site_title = "Mundial"
+    
 class PartidoAdminView(admin.ModelAdmin):
     list_display = ('id','equipo_local','goles_local','equipo_visitante','goles_visitante','fecha','ronda')
 
